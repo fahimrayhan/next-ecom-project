@@ -19,7 +19,7 @@ function signin() {
               
               <button type="submit" className="btn btn-dark w-100">Login</button>
               <p className='text-center mt-2'>Don't have an account? 
-                  <Link href="/register"><a style={{color:'crimson'}}> Register</a></Link>
+                  <Link href="/register"><a style={{color:'crimson'}}> Register Now</a></Link>
                 </p>
           </form>
     </div>
