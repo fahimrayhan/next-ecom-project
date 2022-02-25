@@ -26,8 +26,15 @@ const register = async (req, res) => {
             return res.status(400).json({err: errMsg})
         }
 
+        const user = await Users.findOne({email})
+
+        if (user) {
+            return res.status(400).json({err:'This email already in use'})
+        }
+
         const passWordHash = await bcrypt.hash(password,12)
         const newUser = new Users({ name, email, password: passWordHash, cf_password})
+        await newUser.save()
         console.log(newUser)
         res.json({msg:"Register Success!"})
         

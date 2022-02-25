@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import avatar from '../public/avatar/avatar.jpg'
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -24,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar:{
         type: String,
-        default: avatar
+        default: '../public/avatar/avatar.jpg'
     },
     
 },

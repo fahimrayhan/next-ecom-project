@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {useState, useContext} from 'react'
 import valid from '../utils/valid'
 import {DataContext} from '../store/GlobalState'
+import {postData} from '../utils/fetchData'
 
 const register = () => {
 
@@ -15,9 +16,9 @@ const register = () => {
     setUserData({...userData, [name]:value})
   }
 
-  const [state,dispatch] = useContext(DataContext)
+  const {state,dispatch} = useContext(DataContext)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const errorMessage = valid(name, email, password, cf_password)
     if (errorMessage) {
@@ -25,7 +26,13 @@ const register = () => {
       dispatch({ type: 'NOTIFY', payload: { error: errorMessage}})
     }
     else{
-      dispatch({ type: 'NOTIFY', payload: { success: 'Ok' } })
+      dispatch({ type: 'NOTIFY', payload: { laoding: true }})
+
+      const res = await postData('auth/register',userData)
+      if (res.err) {
+        return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+      }
+      return dispatch({ type: 'NOTIFY', payload: { success: res.msg } })
     }
   }
 
