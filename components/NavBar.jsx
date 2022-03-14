@@ -1,9 +1,17 @@
+import React, {useContext} from 'react'
 import Link from 'next/link';
 import {useRouter} from 'next/router'
 import { AiOutlineShoppingCart} from 'react-icons/ai'
 import { FaUser} from 'react-icons/fa'
+import {DataContext} from '../store/GlobalState'
+import Image from 'next/image'
 const NavBar = () => {
     const router = useRouter();
+
+
+    const {state,dispatch} = useContext(DataContext);
+    const {auth} = state
+
     const isActive = (r) =>{
         if (r===router.pathname) {
             return " active"
@@ -11,6 +19,27 @@ const NavBar = () => {
         else{
             return ""
         }
+    }
+
+    const loggedRouter = () =>{
+        return(
+            <li className="nav-item dropdown ">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src={auth.user.avatar} alt="avatar" style={{
+                        borderRadius: '50%',
+                        height: '30px',
+                        width:'30px',
+                        transform:'translateY(-3px)',
+                        marginRight:'3px'
+                    }}/>
+                    {auth.user.name}
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                </ul>
+            </li>
+        )
     }
 
   return (
@@ -31,13 +60,18 @@ const NavBar = () => {
                             </a>
                           </Link>
                       </li>
-                      <li className="nav-item">
-                          <Link href="/signin">
-                            <a className={"nav-link"+isActive('/signin')}>
-                                  <FaUser/>  Sign In
-                            </a>
-                          </Link>
-                      </li>
+                      {
+                          Object.keys(auth).length === 0 ?
+                          
+                          <li className="nav-item">
+                              <Link href="/signin">
+                                  <a className={"nav-link" + isActive('/signin')}>
+                                      <FaUser />  Sign In
+                                  </a>
+                              </Link>
+                          </li> : loggedRouter()
+                      }
+                      
                       
                       {/* <li className="nav-item dropdown ">
                           <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
