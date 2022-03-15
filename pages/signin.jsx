@@ -1,13 +1,15 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { DataContext } from '../store/GlobalState'
 import { postData } from '../utils/fetchData'
+import {useRouter} from 'next/router'
 
 import Cookie from 'js-cookie'
 
 function signin() {
-
+  
+  const router = useRouter()
   const initState = {  email: '', password: '' }
   const [userData, setUserData] = useState(initState)
   const { email, password} = userData
@@ -18,6 +20,7 @@ function signin() {
   }
 
   const { state, dispatch } = useContext(DataContext)
+  const { auth } = state
 
   const handleSubmit = async (e) => {
     
@@ -41,9 +44,15 @@ function signin() {
         path: 'api/auth/accesstoken',
         expires:7
       })
-
       localStorage.setItem('firstLogin',true)
   }
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) {
+      router.push('/')
+    }
+  }, [auth])
+  
 
   return (
     <div>

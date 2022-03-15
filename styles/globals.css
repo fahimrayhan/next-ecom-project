@@ -17,3 +17,5 @@ a {
 img{
   object-fit: cover;
 }
+
+@import url("./product.css");

@@ -4,7 +4,7 @@ import {useRouter} from 'next/router'
 import { AiOutlineShoppingCart} from 'react-icons/ai'
 import { FaUser} from 'react-icons/fa'
 import {DataContext} from '../store/GlobalState'
-import Image from 'next/image'
+import jsCookie from 'js-cookie';
 const NavBar = () => {
     const router = useRouter();
 
@@ -19,6 +19,13 @@ const NavBar = () => {
         else{
             return ""
         }
+    }
+
+    const handleLogout = () => {
+        jsCookie.remove('refreshtoken', { path:'api/auth/accesstoken'})
+        localStorage.removeItem('firstLogin')
+        dispatch({ type: 'AUTH', payload:{}})
+        dispatch({ type: 'NOTIFY',payload: {success:'Logged Out'}})
     }
 
     const loggedRouter = () =>{
@@ -36,7 +43,7 @@ const NavBar = () => {
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li><a className="dropdown-item" href="#">Profile</a></li>
-                    <li><a className="dropdown-item" href="#">Logout</a></li>
+                    <li><a className="dropdown-item" onClick={handleLogout}>Logout</a></li>
                 </ul>
             </li>
         )
