@@ -1,17 +1,25 @@
 import Link from 'next/link'
-import React from 'react'
+import {useContext} from 'react'
+import {DataContext} from '../../store/GlobalState'
+import {addToCart} from '../../store/Actions'
 
 function ProductItem({product}) {
+
+    const {state, dispatch} = useContext(DataContext) 
+    const {cart} = state
 
     const userLink = () =>{
         return(
             <>
-                <Link href={`product/${product._id}`}>
+                <Link href={`/product/${product._id}`}>
                     <a className="btn btn-info" 
                     style={{marginRight:'5px', flex:1}}
                     >View</a>
                 </Link>
-                <button className="btn btn-success" style={{marginLeft:'5px', flex:1}} >
+                <button className="btn btn-success" style={{marginLeft:'5px', flex:1}} 
+                    disabled={product.inStock === 0? true:false}
+                    onClick={() => dispatch(addToCart(product,cart))}
+                >
                     Buy
                 </button>
             </>

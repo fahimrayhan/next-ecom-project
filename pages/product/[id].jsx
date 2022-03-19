@@ -1,12 +1,16 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useContext, useState } from 'react'
 import {getData} from "../../utils/fetchData"
+import { DataContext } from '../../store/GlobalState'
+import {addToCart} from'../../store/Actions'
 
 const DetailProduct = (props) =>{
 
     const [product] = useState(props.product)
     const [tab,setTab] = useState(0)
- 
+    const {state,dispatch} = useContext(DataContext)
+
+    const {cart} = state
 
     const isActive = (key) =>{
         if (tab===key) {
@@ -62,7 +66,9 @@ const DetailProduct = (props) =>{
                      {product.content}
                  </div>
 
-                <button className="btn btn-dark d-block my-3 px-5" type="button">Buy</button>
+                <button className="btn btn-dark d-block my-3 px-5" type="button"
+                    onClick={()=>dispatch(addToCart(product,cart))}
+                >Buy</button>
 
              </div>
         </div>
@@ -71,7 +77,7 @@ const DetailProduct = (props) =>{
 
 export async function getServerSideProps({params:{id}}) {
     
-    const res = await getData(`product/${id}`)
+    const res = await getData(`/product/${id}`)
     return {
         props: {product:res.product}
     }
