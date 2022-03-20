@@ -34,8 +34,13 @@ function CartItem({item, dispatch,cart}) {
                   disabled={item.quantity === item.inStock  ? true : false}
             > + </button>
         </td>
-        <td className="align-middle" style={{minWidth:'50px', cursor:'pointer'}}>
-              <AiOutlineDelete/>
+          <td className="align-middle" style={{ minWidth: '50px', cursor: 'pointer' }} >
+              <AiOutlineDelete style={{ fontSize: '18px' }} data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                onClick={()=>{ dispatch({
+                    type: 'ADD_MODAL',
+                    payload:{data:cart, id: item._id, title:item.title}
+                })}}
+              />
         </td>
     </tr>
   )

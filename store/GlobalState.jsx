@@ -7,7 +7,7 @@ export const DataContext = createContext()
 export const DataProvider = ({children}) => {
 
 
-    const initState = {notify:{}, auth: {}, cart:[]}
+    const initState = {notify:{}, auth: {}, cart:[], modal:{}}
     const [state,dispatch] = useReducer(reducers,initState)
     const { cart } = state
 

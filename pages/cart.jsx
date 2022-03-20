@@ -11,7 +11,8 @@ function cart() {
   const {cart, auth} = state
 
   const [total, setTotal] = useState(0)
-
+  const [address, setAddress] = useState("")
+  const [phone, setPhone] = useState("")
   useEffect(() => {
     const getTotal = () => {
       const res = cart.reduce((prev,item) => {
@@ -72,9 +73,21 @@ function cart() {
             <form>
               <h2>Shipping</h2>
               <label htmlFor="address">Address</label>
-              <input type="text" name="address" id="address" className="form-control mb-2"/>
+              <input type="text" name="address" id="address" className="form-control mb-2"
+                value={address}
+                 onChange={ (e) =>{ 
+                    setAddress(e.target.value);
+                  }
+                }
+              />
               <label htmlFor="mobile">Mobile</label>
-              <input type="phone" name="mobile" id="mobile" className="form-control mb-2"/>
+              <input type="phone" name="mobile" id="mobile" className="form-control mb-2"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  }
+                }
+              />
             </form>
 
             <h3>Total: 

@@ -1,3 +1,4 @@
+import Modal from "./Modal"
 import NavBar from "./NavBar"
 import Notify from "./Notify"
 
@@ -6,6 +7,7 @@ const Layout = ({children}) => {
     <div className='container'>
         <NavBar/>
         <Notify/>
+        <Modal/>
         {children}
     </div>
   )
