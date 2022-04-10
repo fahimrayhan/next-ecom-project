@@ -1,2 +1,2 @@
 ### NExT ECoM Project
-This is practicec project for deep driving into NextJS
+This is practice project for deep driving into NextJS
