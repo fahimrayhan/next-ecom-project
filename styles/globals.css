@@ -17,6 +17,8 @@ a {
 img{
   object-fit: cover;
   object-position: 0 20%;
+  
 }
 
 @import url("./product.css");
+@import url("./profile.css");

@@ -42,7 +42,9 @@ const NavBar = () => {
                     {auth.user.name}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                    <Link href="/profile">
+                        <li><a className="dropdown-item" href="#">Profile</a></li>
+                    </Link>
                     <li><a className="dropdown-item" onClick={handleLogout}>Logout</a></li>
                 </ul>
             </li>

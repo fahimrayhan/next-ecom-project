@@ -7,9 +7,9 @@ export const DataContext = createContext()
 export const DataProvider = ({children}) => {
 
 
-    const initState = {notify:{}, auth: {}, cart:[], modal:{}}
+    const initState = {notify:{}, auth: {}, cart:[], modal:{}, orders:[]}
     const [state,dispatch] = useReducer(reducers,initState)
-    const { cart } = state
+    const { cart, auth } = state
 
 
     useEffect(() => {
@@ -38,6 +38,22 @@ export const DataProvider = ({children}) => {
     useEffect(() => {
       localStorage.setItem('_next_cart01', JSON.stringify(cart))
     }, [cart])
+    
+
+    useEffect(() => {
+      if (auth.token) {
+          getData('order',auth.token).then(
+              res => {
+                if (res.err) {
+                    return dispatch({ type: 'NOTIFY', payload: { error: res.err } })
+                }
+                else {
+                    dispatch({ type: 'ADD_ORDERS', payload: res.orders})
+                }
+              }
+          )
+      }
+    }, [auth.token])
     
     
 

@@ -14,7 +14,7 @@ export default async (req,res) => {
 const getProducts = async (req, res) => {
     try {
         const products = await Products.find()
-        res.json({
+        res.status(200).json({
             status:'success',
             result: products.length,
             products
